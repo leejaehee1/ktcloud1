@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Profile from "./components/Profile";
 import Demo from "./components/Demo";
+import EventListener from "./pages/EventListener";
 
 const children = [
   <li>
@@ -25,6 +26,9 @@ const children = [
 function App() {
   return (
     <ul>
+      <li>
+        <EventListener />
+      </li>
       <li>
         <Profile />
       </li>
