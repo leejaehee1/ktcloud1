@@ -9,7 +9,7 @@ const Demo = () => {
       <p>{D.randomName()}</p>
       <p>{D.randomJobTitle()}</p>
       <p>{D.randomSentence()}</p>
-      <img src={D.randomAvatar()} width={100} height={100} />
+      <img src={D.randomAvatar()} width={100} height={100} alt="avatar" />
     </div>
   ));
 
@@ -20,7 +20,7 @@ const Demo = () => {
         {D.randomName()}, {D.randomJobTitle()}, {D.randomDayMonthYear()}
       </p>
       <img src={D.randomAvatar()} width={100} height={100} alt="avatar" />
-      <img src={D.randomImage()} width={100} height={100} alt="random image" />
+      <img src={D.randomImage()} width={100} height={100} alt="random" />
       {children}
     </>
   );
