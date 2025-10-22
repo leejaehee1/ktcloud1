@@ -14,9 +14,9 @@ async function list(collection, page, search) {
     .sort({ createdAt: -1 });
   const totalCount = await collection.count(query);
   const posts = await cursor.toArray();
-  const paginator = paginator(page, perPage, totalCount);
+  const paginatorObj = paginator({ totalCount, page, perPage: perPage });
 
-  return [posts, paginator];
+  return [posts, paginatorObj];
 }
 
 module.exports = {
