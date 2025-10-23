@@ -25,14 +25,14 @@ export class BlogRepositoryImpl implements BlogRepository {
     return this.blogModel.find().exec();
   }
 
-  createPost(postDto: PostDto) {
+  async createPost(postDto: PostDto) {
     const createdPost = {
       ...postDto,
       createdDt: new Date(),
       updatedDt: new Date(),
     };
 
-    return this.blogModel.create(createdPost);
+    await this.blogModel.create(createdPost);
   }
 
   getPost(id: string): Promise<PostDto> {
