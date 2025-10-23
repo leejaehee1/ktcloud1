@@ -1,3 +1,7 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Blog, BlogDocument } from './blog.schema';
 import { PostDto } from './blog.model';
 // import * as fs from 'fs';
 
@@ -9,31 +13,45 @@ export interface BlogRepository {
   updatePost(id: string, postDto: PostDto): Promise<PostDto>;
 }
 
+@Injectable()
 export class BlogRepositoryImpl implements BlogRepository {
   // FILE_NAME = './src/blog.json';
 
+  constructor(@InjectModel(Blog.name) private blogModel: Model<BlogDocument>) {
+    this.blogModel = blogModel;
+  }
+
   getAllPosts(): Promise<PostDto[]> {
-    // const datas = await fs.readFile(this.FILE_NAME, 'utf-8');
-    // const posts = JSON.parse(datas.toString);
-    // return posts;
-    // return [] as PostDto[];
-    return Promise.resolve([]);
+    return this.blogModel.find().exec();
   }
 
   createPost(postDto: PostDto) {
-    return Promise.resolve(postDto);
+    const createdPost = {
+      ...postDto,
+      createdDt: new Date(),
+      updatedDt: new Date(),
+    };
+
+    return this.blogModel.create(createdPost);
   }
 
   getPost(id: string): Promise<PostDto> {
-    return Promise.resolve({ id, title: '', content: '', name: '' } as PostDto);
+    return this.blogModel.findById(id).exec() as Promise<PostDto>;
   }
 
   delete(id: string): Promise<void> {
     console.log(`[id: ${id}] 게시글 삭제`);
+    this.blogModel.findByIdAndDelete(id).exec();
     return Promise.resolve();
   }
 
-  updatePost(id: string, postDto: PostDto): Promise<PostDto> {
-    return Promise.resolve(postDto);
+  async updatePost(id: string, postDto: PostDto): Promise<PostDto> {
+    const updatedPost = {
+      ...postDto,
+      updatedDt: new Date(),
+    };
+
+    await this.blogModel.findByIdAndUpdate(id, updatedPost).exec();
+    return updatedPost;
   }
 }
