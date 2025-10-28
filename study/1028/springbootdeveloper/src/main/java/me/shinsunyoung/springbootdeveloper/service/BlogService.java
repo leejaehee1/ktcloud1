@@ -37,4 +37,8 @@ public class BlogService {
 
         return article;
     }
+
+    public Article findById(Long id) {
+        return blogRepository.findById(id).orElseThrow();
+    }
 }
