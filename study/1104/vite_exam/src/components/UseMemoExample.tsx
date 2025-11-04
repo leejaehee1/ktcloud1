@@ -1,5 +1,5 @@
 // import
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export default function UseMemoExample() {
   // useState, variables
@@ -7,6 +7,10 @@ export default function UseMemoExample() {
   const [text, setText] = useState("");
 
   // function
+  const expensiveValue = useMemo(() => {
+    console.log("복잡한 계산 중...");
+    return count * 1000;
+  }, [count]);
 
   return (
     <div className="p-4 space-y-3">
