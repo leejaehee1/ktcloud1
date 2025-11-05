@@ -16,8 +16,8 @@ export default function UseCallbackExample() {
 
   const handleClick = useCallback(() => {
     console.log("handleClick 호출");
-    setCount(count + 1);
-  }, [count]);
+    // setCount 는 삭제
+  }, []);
 
   return (
     <div className="p-4 space-y-3">
