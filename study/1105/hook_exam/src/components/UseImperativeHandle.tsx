@@ -24,3 +24,27 @@ const CustomInput = forwardRef((props, ref) => {
 });
 
 // 부모 컴포넌트
+function ParentComponent() {
+  const inputRef = useRef<{ focus: () => void; clear: () => void }>(null);
+
+  return (
+    <div className="p-4">
+      <CustomInput ref={inputRef} />
+
+      <button
+        onClick={() => inputRef.current?.focus()}
+        className="btn btn-primary"
+      >
+        포커스
+      </button>
+      <button
+        onClick={() => inputRef.current?.clear()}
+        className="btn btn-primary"
+      >
+        초기화
+      </button>
+    </div>
+  );
+}
+
+export default ParentComponent;
