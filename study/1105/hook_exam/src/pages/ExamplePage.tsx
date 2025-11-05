@@ -2,6 +2,7 @@ import InputFocusExample from "../components/InputFocusExample";
 import ParentComponent from "../components/UseImperativeHandle";
 import UseIdExample from "../components/UseIdExample";
 import DeferredValueExample from "../components/UseDefferredValueExample";
+import UseTransitionExample from "../components/UseTransitionExample";
 
 export default function ExamplePage() {
   return (
@@ -11,6 +12,7 @@ export default function ExamplePage() {
       <ParentComponent />
       <UseIdExample />
       <DeferredValueExample />
+      <UseTransitionExample />
     </div>
   );
 }
