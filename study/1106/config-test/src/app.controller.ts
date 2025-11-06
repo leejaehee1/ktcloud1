@@ -13,4 +13,9 @@ export class AppController {
     // config service 사용
     return this.configService.get('MESSAGE') as string;
   }
+
+  @Get('service-url')
+  getServiceUrl(): string {
+    return this.configService.get('SERVICE_URL') as string;
+  }
 }
