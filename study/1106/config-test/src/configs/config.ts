@@ -17,7 +17,7 @@ if (phase === 'local') {
 }
 
 const yamlConfig: Record<string, any> = yaml.load(
-  readFileSync(`${process.cwd()}/env/config.yaml`, 'utf8'),
+  readFileSync(`${process.cwd()}/envs/config.yaml`, 'utf8'),
 ) as Record<string, any>;
 
 export default () => ({
