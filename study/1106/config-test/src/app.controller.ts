@@ -18,4 +18,11 @@ export class AppController {
   getServiceUrl(): string {
     return this.configService.get('SERVICE_URL') as string;
   }
+
+  @Get('db-info')
+  getDbInfo(): string {
+    console.log(this.configService.get('logLevel') as string);
+    console.log(this.configService.get('apiVersion') as string);
+    return this.configService.get('dbInfo') as string;
+  }
 }
