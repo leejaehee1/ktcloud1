@@ -19,13 +19,13 @@ export class UserService {
     return result as User;
   }
 
-  async updateUser(email: string, _user: UpdateUserDto): Promise<void> {
+  async updateUser(email: string, _user: UpdateUserDto) {
     const user: User = await this.getUser(email);
     console.log(_user);
     user.username = _user.username;
     user.password = _user.password;
     console.log(user);
-    this.userRepository.save(user);
+    await this.userRepository.save(user);
   }
 
   deleteUser(email: string) {
