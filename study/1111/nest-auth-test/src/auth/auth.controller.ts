@@ -2,14 +2,17 @@ import {
   Controller,
   Post,
   Body,
-  Request,
-  Response,
+  Req,
+  Res,
   UseGuards,
   Get,
 } from '@nestjs/common';
+import type { Response as ExpressResponse } from 'express';
+import type { Request as ExpressRequest } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/user.dto';
 import { LoginGard, LocalAuthGuard, AuthenticatedGuard } from './auth.guard';
+import { LoginDto } from 'src/user/user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,10 +24,10 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Request() req, @Response() res) {
+  async login(@Body() loginDto: LoginDto, @Res() res: ExpressResponse) {
     const userInfo = await this.authService.validateUser(
-      req.body.email,
-      req.body.password,
+      loginDto.email,
+      loginDto.password,
     );
 
     if (userInfo) {
@@ -40,7 +43,7 @@ export class AuthController {
 
   @UseGuards(LoginGard)
   @Post('/login2')
-  async login2(@Request() req, @Response() res) {
+  login2(@Req() req: ExpressRequest, @Res() res: ExpressResponse) {
     if (!req.cookies['login'] && req.user) {
       res.cookie('login', JSON.stringify(req.user), {
         httpOnly: true,
@@ -59,13 +62,13 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login3')
-  login3(@Request() req) {
+  login3(@Req() req: ExpressRequest) {
     return req.user;
   }
 
   @UseGuards(AuthenticatedGuard)
   @Get('test-guard2')
-  testGuardWithSession(@Request() req) {
+  testGuardWithSession(@Req() req: ExpressRequest) {
     return req.user;
   }
 }

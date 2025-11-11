@@ -12,6 +12,7 @@ Content-Type: application/json
 
 ### 로그인
 POST http://localhost:3000/auth/login
+Content-Type: application/json
 
 {
   "email": "andy1@podo.com",
@@ -20,6 +21,7 @@ POST http://localhost:3000/auth/login
 
 ### 로그인2 : 로그인 가드 사용
 POST http://localhost:3000/auth/login2
+Content-Type: application/json
 
 {
   "email": "andy1@podo.com",
@@ -34,8 +36,8 @@ POST {{server}}/login3
 Content-Type: application/json
 
 {
-    "email": "bbb@abc.com",
-    "password": "bbb"
+  "email": "andy1@podo.com",
+  "password": "1234"
 }
 
 ### login3 wrong password
