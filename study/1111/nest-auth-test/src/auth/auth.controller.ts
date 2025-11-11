@@ -1,6 +1,15 @@
-import { Controller, Post, Body, Request, Response } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Request,
+  Response,
+  UseGuards,
+  Get,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/user.dto';
+import { LoginGard, LocalAuthGuard, AuthenticatedGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -27,5 +36,36 @@ export class AuthController {
       console.log('not match password');
     }
     return res.send({ message: 'login success' });
+  }
+
+  @UseGuards(LoginGard)
+  @Post('/login2')
+  async login2(@Request() req, @Response() res) {
+    if (!req.cookies['login'] && req.user) {
+      res.cookie('login', JSON.stringify(req.user), {
+        httpOnly: true,
+        // maxAge: 1000 * 60 * 60 * 24, //1day
+        maxAge: 1000 * 10, //test
+      });
+    }
+    return res.send({ message: 'login2 success' });
+  }
+
+  @UseGuards(LoginGard)
+  @Get('test-guard')
+  testGuard() {
+    return '로그인된 때만 이 글이 보입니다';
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('login3')
+  login3(@Request() req) {
+    return req.user;
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('test-guard2')
+  testGuardWithSession(@Request() req) {
+    return req.user;
   }
 }
