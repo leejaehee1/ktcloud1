@@ -51,12 +51,12 @@ export class AuthenticatedGuard implements CanActivate {
   }
 }
 
-// @Injectable()
-// export class GoogleAuthGuard extends AuthGuard('google') {
-//   async canActivate(context: any): Promise<boolean> {
-//     const result = (await super.canActivate(context)) as boolean;
-//     const request = context.switchToHttp().getRequest();
-//     await super.logIn(request); // 세션 적용
-//     return result;
-//   }
-// }
+@Injectable()
+export class GoogleAuthGuard extends AuthGuard('google') {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const result = (await super.canActivate(context)) as boolean;
+    const request: ExpressRequest = context.switchToHttp().getRequest();
+    await super.logIn(request); // 세션 적용
+    return result;
+  }
+}

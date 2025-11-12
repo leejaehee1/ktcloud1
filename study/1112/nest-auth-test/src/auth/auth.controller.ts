@@ -13,8 +13,14 @@ import type { Response as ExpressResponse } from 'express';
 import type { Request as ExpressRequest } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/user.dto';
-import { LoginGard, LocalAuthGuard, AuthenticatedGuard } from './auth.guard';
+import {
+  LoginGard,
+  LocalAuthGuard,
+  AuthenticatedGuard,
+  GoogleAuthGuard,
+} from './auth.guard';
 import { LoginDto } from 'src/user/user.dto';
+import { User } from 'src/user/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -72,5 +78,18 @@ export class AuthController {
   @Get('test-guard2')
   testGuardWithSession(@Req() req: ExpressRequest) {
     return req.user;
+  }
+
+  @Get('to-google')
+  @UseGuards(GoogleAuthGuard)
+  googleAuth(@Req() req) {
+    console.log(req);
+  }
+
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  googleAuthRedirect(@Body() user: User, @Res() res: ExpressResponse) {
+    console.log(user);
+    return res.send(user);
   }
 }
